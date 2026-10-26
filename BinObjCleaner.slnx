@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BinObjCleaner/BinObjCleaner.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BinObjCleaner.Tests/BinObjCleaner.Tests.csproj" />
+  </Folder>
+</Solution>

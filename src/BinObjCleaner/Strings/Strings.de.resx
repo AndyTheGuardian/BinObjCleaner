@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddFolderName" xml:space="preserve">
+    <value>+ Name</value>
+  </data>
+  <data name="AppSubtitle" xml:space="preserve">
+    <value>Findet und entfernt bin-/obj-Ordner</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>BinObj Cleaner</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Durchsuchen…</value>
+  </data>
+  <data name="ByProject" xml:space="preserve">
+    <value>Aufteilung nach Projekt</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="ChooseFolderTitle" xml:space="preserve">
+    <value>Stammverzeichnis wählen</value>
+  </data>
+  <data name="ClearPath" xml:space="preserve">
+    <value>Pfad zurücksetzen</value>
+  </data>
+  <data name="ColumnPath" xml:space="preserve">
+    <value>Pfad (relativ zum Stammordner)</value>
+  </data>
+  <data name="ColumnPathAsc" xml:space="preserve">
+    <value>Pfad ↑</value>
+  </data>
+  <data name="ColumnPathDesc" xml:space="preserve">
+    <value>Pfad ↓</value>
+  </data>
+  <data name="ColumnShare" xml:space="preserve">
+    <value>Anteil</value>
+  </data>
+  <data name="ColumnSize" xml:space="preserve">
+    <value>Größe</value>
+  </data>
+  <data name="ColumnSizeAsc" xml:space="preserve">
+    <value>Größe ↑</value>
+  </data>
+  <data name="ColumnSizeDesc" xml:space="preserve">
+    <value>Größe ↓</value>
+  </data>
+  <data name="ColumnType" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="ConfirmDeleteText" xml:space="preserve">
+    <value>Die folgenden Verzeichnisse und ihr gesamter Inhalt werden entfernt. Erstellungsdaten, NuGet-Caches und Referenz-Assemblies gehen dabei verloren.</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>{0} Ordner löschen?</value>
+  </data>
+  <data name="ConfirmSummary" xml:space="preserve">
+    <value>{0} Verzeichnisse · {1} Dateien</value>
+  </data>
+  <data name="DeleteAll" xml:space="preserve">
+    <value>Alle löschen</value>
+  </data>
+  <data name="DeleteSelection" xml:space="preserve">
+    <value>Auswahl löschen ({0})</value>
+  </data>
+  <data name="DryRun" xml:space="preserve">
+    <value>Probelauf (nichts löschen)</value>
+  </data>
+  <data name="FilterPlaceholder" xml:space="preserve">
+    <value>Filtern…</value>
+  </data>
+  <data name="FinalDelete" xml:space="preserve">
+    <value>Endgültig löschen</value>
+  </data>
+  <data name="FolderNames" xml:space="preserve">
+    <value>Ordner:</value>
+  </data>
+  <data name="FollowSymbolicLinks" xml:space="preserve">
+    <value>Symbolischen Links folgen</value>
+  </data>
+  <data name="IncludeHidden" xml:space="preserve">
+    <value>Verborgene Ordner</value>
+  </data>
+  <data name="IncludeSubdirectories" xml:space="preserve">
+    <value>Unterordner einbeziehen</value>
+  </data>
+  <data name="InvalidPath" xml:space="preserve">
+    <value>Der Pfad existiert nicht: {0}</value>
+  </data>
+  <data name="KpiBinObjSplit" xml:space="preserve">
+    <value>{0} × bin · {1} × obj</value>
+  </data>
+  <data name="KpiBytes" xml:space="preserve">
+    <value>{0} Bytes</value>
+  </data>
+  <data name="KpiCandidates" xml:space="preserve">
+    <value>Summe Löschkandidaten</value>
+  </data>
+  <data name="KpiFoundFolders" xml:space="preserve">
+    <value>Gefundene Ordner</value>
+  </data>
+  <data name="KpiRootTotal" xml:space="preserve">
+    <value>Verzeichnis gesamt</value>
+  </data>
+  <data name="KpiRootTotalSub" xml:space="preserve">
+    <value>gesamter Stammordner</value>
+  </data>
+  <data name="KpiSavings" xml:space="preserve">
+    <value>Potenzielle Ersparnis</value>
+  </data>
+  <data name="KpiSavingsSub" xml:space="preserve">
+    <value>freier Speicherplatz</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
+  <data name="LanguageGerman" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
+  <data name="LegendRemaining" xml:space="preserve">
+    <value>Rest</value>
+  </data>
+  <data name="LegendSavings" xml:space="preserve">
+    <value>Ersparnis</value>
+  </data>
+  <data name="MoreFolders" xml:space="preserve">
+    <value>… und {0} weitere Ordner</value>
+  </data>
+  <data name="NothingSelected" xml:space="preserve">
+    <value>Es ist nichts ausgewählt.</value>
+  </data>
+  <data name="OfTotal" xml:space="preserve">
+    <value>von {0}</value>
+  </data>
+  <data name="RecycleBinHint" xml:space="preserve">
+    <value>Ohne Papierkorb wird der Speicherplatz sofort freigegeben.</value>
+  </data>
+  <data name="RecycleBinUnavailable" xml:space="preserve">
+    <value>Der Papierkorb steht auf diesem System nicht zur Verfügung – es wird endgültig gelöscht.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Neu laden</value>
+  </data>
+  <data name="Results" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
+  <data name="SavingsHint" xml:space="preserve">
+    <value>nur Kandidaten</value>
+  </data>
+  <data name="SavingsTitle" xml:space="preserve">
+    <value>Platzersparnis</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Alle auswählen</value>
+  </data>
+  <data name="ShareOfRoot" xml:space="preserve">
+    <value>Anteil am Stammordner {0} = {1}</value>
+  </data>
+  <data name="SortPath" xml:space="preserve">
+    <value>Pfad</value>
+  </data>
+  <data name="SortPathAsc" xml:space="preserve">
+    <value>Pfad ↑</value>
+  </data>
+  <data name="SortPathDesc" xml:space="preserve">
+    <value>Pfad ↓</value>
+  </data>
+  <data name="StatusCancelled" xml:space="preserve">
+    <value>Vorgang abgebrochen.</value>
+  </data>
+  <data name="StatusDeleted" xml:space="preserve">
+    <value>{0} Ordner gelöscht · {1} freigegeben</value>
+  </data>
+  <data name="StatusDeleteFailed" xml:space="preserve">
+    <value>{0} Ordner konnten nicht gelöscht werden.</value>
+  </data>
+  <data name="StatusDeleting" xml:space="preserve">
+    <value>Lösche {0} von {1} …</value>
+  </data>
+  <data name="StatusDone" xml:space="preserve">
+    <value>Scan abgeschlossen · {0} Ordner · {1} Dateien · {2}</value>
+  </data>
+  <data name="StatusDryRun" xml:space="preserve">
+    <value>Probelauf: {0} Ordner ({1}) würden gelöscht.</value>
+  </data>
+  <data name="StatusFailed" xml:space="preserve">
+    <value>Die Suche ist fehlgeschlagen: {0}</value>
+  </data>
+  <data name="StatusIdle" xml:space="preserve">
+    <value>Bitte ein Stammverzeichnis wählen und die Suche starten.</value>
+  </data>
+  <data name="StatusNothingFound" xml:space="preserve">
+    <value>Keine passenden Ordner gefunden.</value>
+  </data>
+  <data name="StatusScanning" xml:space="preserve">
+    <value>Suche läuft … {0} Verzeichnisse, {1} Treffer</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="TopFolders" xml:space="preserve">
+    <value>Top 5 nach Größe</value>
+  </data>
+  <data name="UseRecycleBin" xml:space="preserve">
+    <value>In den Papierkorb verschieben (wiederherstellbar)</value>
+  </data>
+  <data name="UseRecycleBinOption" xml:space="preserve">
+    <value>Papierkorb</value>
+  </data>
+  <data name="ViewFlat" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="ViewMode" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="ViewTree" xml:space="preserve">
+    <value>Baum</value>
+  </data>
+</root>

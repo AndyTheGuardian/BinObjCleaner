@@ -1,0 +1,791 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BinObjCleaner.ViewModels"
+        xmlns:models="using:BinObjCleaner.Models"
+        xmlns:ctrl="using:BinObjCleaner.Controls"
+        x:Class="BinObjCleaner.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{Binding WindowTitle}"
+        Icon="avares://BinObjCleaner/Assets/appicon.png"
+        Width="1360" Height="1020"
+        MinWidth="1040" MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppSurfaceBrush}"
+        FontSize="13">
+
+  <Window.Styles>
+
+    <!-- === Basis-Buttons === -->
+    <Style Selector="Button">
+      <Setter Property="Height" Value="34" />
+      <Setter Property="Padding" Value="14,0" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Background" Value="{DynamicResource AppPanelAltBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="Button:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppHoverBrush}" />
+    </Style>
+
+    <!-- Einheitliches Blau: der Fokus-Indikator des Themes nutzt den Systemakzent.
+         Er wird abgeschaltet und durch einen Rahmen in der Akzentfarbe ersetzt. -->
+    <Style Selector="Button">
+      <Setter Property="FocusAdorner" Value="{x:Null}" />
+    </Style>
+
+    <Style Selector="Button:focus">
+      <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <Style Selector="Button:disabled">
+      <Setter Property="Opacity" Value="0.45" />
+    </Style>
+
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="Button.primary:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <Style Selector="Button.primary:focus">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="{DynamicResource AppDangerBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="Button.danger:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppDangerHoverBrush}" />
+    </Style>
+
+    <Style Selector="Button.ghost">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="Button.ghost:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppHoverBrush}" />
+    </Style>
+
+    <Style Selector="Button.icon">
+      <Setter Property="Width" Value="26" />
+      <Setter Property="Height" Value="26" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <!-- Symbole in Buttons übernehmen die Textfarbe des Buttons -->
+    <Style Selector="Button ctrl|AppIcon">
+      <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+    </Style>
+
+    <!-- === Segment-Umschalter === -->
+    <Style Selector="ToggleButton.seg">
+      <Setter Property="Height" Value="28" />
+      <Setter Property="MinWidth" Value="34" />
+      <Setter Property="Padding" Value="10,0" />
+      <Setter Property="CornerRadius" Value="7" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextDimBrush}" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="ToggleButton.seg:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppHoverBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+    <Style Selector="ToggleButton.seg:checked">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+
+    <Style Selector="Border.seggroup">
+      <Setter Property="Background" Value="{DynamicResource AppPanelBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="9" />
+      <Setter Property="Padding" Value="3" />
+    </Style>
+
+    <!-- === Texte === -->
+    <Style Selector="TextBlock.kpi-label">
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="0.7" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+      <Setter Property="TextWrapping" Value="NoWrap" />
+      <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <Style Selector="TextBlock.kpi-value">
+      <Setter Property="FontSize" Value="25" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.kpi-sub">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextDimBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.section">
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.muted">
+      <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.dim">
+      <Setter Property="Foreground" Value="{DynamicResource AppTextDimBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.option">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextDimBrush}" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- === Typenschild (bin/obj) === -->
+    <Style Selector="Border.tag">
+      <Setter Property="CornerRadius" Value="5" />
+      <Setter Property="Padding" Value="6,2" />
+      <Setter Property="Background" Value="{DynamicResource AppAccentSoftBrush}" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <Style Selector="TextBlock.tag">
+      <Setter Property="FontFamily" Value="Cascadia Mono,Consolas" />
+      <Setter Property="FontSize" Value="10.5" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Foreground" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <Style Selector="Border.tag.obj">
+      <Setter Property="Background" Value="{DynamicResource AppSecondSoftBrush}" />
+    </Style>
+
+    <Style Selector="Border.tag.obj TextBlock.tag">
+      <Setter Property="Foreground" Value="{DynamicResource AppSecondBrush}" />
+    </Style>
+
+    <!-- === Karten === -->
+    <Style Selector="Border.card">
+      <Setter Property="Background" Value="{DynamicResource AppPanelAltBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="12" />
+    </Style>
+
+    <Style Selector="Border.panel">
+      <Setter Property="Background" Value="{DynamicResource AppPanelBrush}" />
+    </Style>
+
+    <Style Selector="Border.chip">
+      <Setter Property="Background" Value="{DynamicResource AppPanelAltBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="Padding" Value="7,3" />
+    </Style>
+
+    <Style Selector="Border.pathbox">
+      <Setter Property="Background" Value="{DynamicResource AppPanelBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Height" Value="34" />
+    </Style>
+
+    <!-- === Statuspunkt === -->
+    <Style Selector="Ellipse.status">
+      <Setter Property="Fill" Value="{DynamicResource AppSuccessBrush}" />
+    </Style>
+
+    <Style Selector="Ellipse.status.busy">
+      <Setter Property="Fill" Value="{DynamicResource AppWarningBrush}" />
+    </Style>
+
+    <!-- === Legendenfarben === -->
+    <Style Selector="Border.swatch">
+      <Setter Property="Background" Value="{DynamicResource ChartRemainingBrush}" />
+    </Style>
+
+    <Style Selector="Border.swatch.bin">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <Style Selector="Border.swatch.obj">
+      <Setter Property="Background" Value="{DynamicResource AppSecondBrush}" />
+    </Style>
+
+    <!-- === Eingabefelder === -->
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+      <Setter Property="CaretBrush" Value="{DynamicResource AppTextBrush}" />
+      <Setter Property="SelectionBrush" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="FontSize" Value="12.5" />
+      <!-- Ohne das sitzt der Text oben im Feld statt mittig. -->
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <!-- Der Fokus-Indikator des Themes wird abgeschaltet: der umgebende Rahmen
+           (Border.field) hebt stattdessen den Fokus hervor. -->
+      <Setter Property="FocusAdorner" Value="{x:Null}" />
+    </Style>
+
+    <Style Selector="TextBox:focus">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Der Rahmen und der Fokus-Indikator stammen aus dem Theme-Template.
+         Beide werden entfernt - der Fokus wird am umgebenden Rahmen (Border.field)
+         dargestellt, sonst ragt der Ring über die Feldgrenzen hinaus. -->
+    <Style Selector="TextBox /template/ Border">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="TextBox:focus /template/ Border">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <!-- Eingabefeld-Rahmen: Eigenschaften kommen aus dem Style, damit der
+         Fokus-Zustand (Border.field.focused) sie überschreiben kann. -->
+    <Style Selector="Border.input">
+      <Setter Property="Background" Value="{DynamicResource AppPanelBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="7" />
+    </Style>
+
+    <!-- Fokus am umgebenden Rahmen -->
+    <Style Selector="Border.field.focused">
+      <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <Style Selector="TextBox.boxed">
+      <Setter Property="Background" Value="{DynamicResource AppPanelBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="7" />
+      <Setter Property="Height" Value="28" />
+      <Setter Property="Padding" Value="8,0" />
+    </Style>
+
+    <Style Selector="TextBox.boxed:focus">
+      <Setter Property="BorderBrush" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <!-- Eingabefeld fuer einen zusaetzlichen Ordnernamen: erst sichtbar, wenn benutzt -->
+    <Style Selector="TextBox.newfolder">
+      <Setter Property="Width" Value="0" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="MinHeight" Value="0" />
+      <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style Selector="TextBox.newfolder:focus">
+      <Setter Property="Width" Value="42" />
+      <Setter Property="MinWidth" Value="42" />
+    </Style>
+
+    <!-- === Fortschrittsbalken in der Liste === -->
+    <Style Selector="ProgressBar.share">
+      <Setter Property="Height" Value="5" />
+      <Setter Property="MinHeight" Value="5" />
+      <Setter Property="Background" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource AppAccentBrush}" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="CornerRadius" Value="3" />
+    </Style>
+
+    <!-- === Tabellenkopf === -->
+    <Style Selector="TextBlock.th">
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="0.7" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+    </Style>
+
+    <Style Selector="Button.sort">
+      <Setter Property="Height" Value="26" />
+      <Setter Property="Padding" Value="8,0" />
+      <Setter Property="FontSize" Value="11.5" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="LetterSpacing" Value="0.4" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+    </Style>
+
+    <Style Selector="Button.sort:pointerover">
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+    <!-- === Listenzeilen === -->
+    <Style Selector="ItemsControl.rowlist > Border.row:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppHoverBrush}" />
+    </Style>
+
+    <!-- === Umschalter === -->
+    <!-- Eigene Vorlage: 34x19 wie im Mockup, ohne reservierten Platz fuer
+         On/Off-Beschriftung - die Beschriftung steht direkt daneben. -->
+    <Style Selector="ToggleButton.switch">
+      <Setter Property="Width" Value="34" />
+      <Setter Property="Height" Value="19" />
+      <Setter Property="MinWidth" Value="0" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border x:Name="Track" Width="34" Height="19" CornerRadius="9.5"
+                  Background="{DynamicResource AppSwitchOffBrush}">
+            <Border x:Name="Thumb" Width="15" Height="15" CornerRadius="7.5"
+                    Background="#FFFFFF" HorizontalAlignment="Left" Margin="2" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="ToggleButton.switch:checked /template/ Border#Track">
+      <Setter Property="Background" Value="{DynamicResource AppAccentBrush}" />
+    </Style>
+
+    <Style Selector="ToggleButton.switch:checked /template/ Border#Thumb">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+
+    <Style Selector="ToggleButton.switch:pointerover /template/ Border#Track">
+      <Setter Property="Background" Value="{DynamicResource AppAccentHoverBrush}" />
+    </Style>
+
+    <!-- === Baumansicht === -->
+    <Style Selector="TreeView">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+
+    <!-- === Kopfbereich === -->
+    <Grid Grid.Row="0" Margin="16,12,16,0" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+      <Border Grid.Column="0" Classes="pathbox field">
+        <Grid ColumnDefinitions="Auto,*,Auto" Margin="10,0,4,0">
+          <ctrl:AppIcon Grid.Column="0" Kind="Search" Margin="0,0,9,0" VerticalAlignment="Center"
+                        Stroke="{DynamicResource AppTextMutedBrush}" />
+
+          <TextBox Grid.Column="1" Text="{Binding RootPath, Mode=TwoWay}" VerticalAlignment="Center"
+                   FontFamily="Cascadia Mono,Consolas"
+                   PlaceholderText="C:\Pfad\zum\Stammverzeichnis"
+                   GotFocus="OnFieldGotFocus" LostFocus="OnFieldLostFocus" />
+
+          <Button Grid.Column="2" Classes="icon" Command="{Binding ClearPathCommand}"
+                  IsVisible="{Binding HasRootPath}" ToolTip.Tip="{Binding ClearPathText}">
+            <ctrl:AppIcon Kind="Close" Stroke="{DynamicResource AppTextMutedBrush}" />
+          </Button>
+        </Grid>
+      </Border>
+
+      <Button Grid.Column="1" Classes="ghost" Command="{Binding ScanCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="7">
+          <ctrl:AppIcon Kind="Refresh" />
+          <TextBlock Text="{Binding RescanText}" />
+        </StackPanel>
+      </Button>
+
+      <Button Grid.Column="2" Classes="primary" Command="{Binding BrowseCommand}">
+        <StackPanel Orientation="Horizontal" Spacing="7">
+          <ctrl:AppIcon Kind="Folder" />
+          <TextBlock Text="{Binding BrowseText}" />
+        </StackPanel>
+      </Button>
+    </Grid>
+
+    <!-- === Optionsleiste === -->
+    <Border Grid.Row="1" Margin="16,10,16,0" Classes="panel" Padding="16,9">
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20">
+
+        <WrapPanel Grid.Column="0" Orientation="Horizontal" ItemSpacing="14" LineSpacing="6" VerticalAlignment="Center">
+
+          <!-- Gesuchte Ordnernamen -->
+          <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+            <TextBlock Text="{Binding FolderNamesText}" FontWeight="SemiBold"
+                       Foreground="{DynamicResource AppTextBrush}" VerticalAlignment="Center" />
+
+            <ItemsControl ItemsSource="{Binding FolderNames}" VerticalAlignment="Center">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" Spacing="6" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                  <Border Classes="chip" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <TextBlock Text="{Binding}" FontFamily="Cascadia Mono,Consolas" FontSize="12"
+                                 Foreground="{DynamicResource AppTextBrush}" VerticalAlignment="Center" />
+                      <Button Classes="icon" Width="16" Height="16" Padding="0"
+                              Click="OnRemoveFolderNameClick"
+                              CommandParameter="{Binding}">
+                        <ctrl:AppIcon Kind="Close" Width="9" Height="9" Stroke="{DynamicResource AppTextMutedBrush}" />
+                      </Button>
+                    </StackPanel>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Border Classes="chip" VerticalAlignment="Center">
+              <StackPanel Orientation="Horizontal" Spacing="2">
+                <!-- Das Eingabefeld ist nur sichtbar, wenn es benutzt wird (Mockup: "+ Name") -->
+                <TextBox x:Name="NewFolderNameBox" Classes="newfolder" Text="{Binding NewFolderName, Mode=TwoWay}"
+                         FontFamily="Cascadia Mono,Consolas" FontSize="12"
+                         GotFocus="OnFieldGotFocus" LostFocus="OnFieldLostFocus"
+                         KeyDown="OnNewFolderNameKeyDown" />
+                <TextBlock Text="+ Name" FontSize="12" Foreground="{DynamicResource AppTextMutedBrush}"
+                           IsVisible="{Binding !IsNewFolderFocused}"
+                           PointerPressed="OnAddFolderNameClick" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+
+          <!-- Optionen -->
+          <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+            <ToggleButton Classes="switch" IsChecked="{Binding IncludeSubdirectories}" />
+            <TextBlock Text="{Binding IncludeSubdirectoriesText}" Classes="option" />
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+            <ToggleButton Classes="switch" IsChecked="{Binding IncludeHidden}" />
+            <TextBlock Text="{Binding IncludeHiddenText}" Classes="option" />
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+            <ToggleButton Classes="switch" IsChecked="{Binding FollowSymbolicLinks}" />
+            <TextBlock Text="{Binding FollowSymbolicLinksText}" Classes="option" />
+          </StackPanel>
+        </WrapPanel>
+
+        <!-- Design / Sprache / Ansicht -->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <Border Classes="seggroup">
+            <StackPanel Orientation="Horizontal" Spacing="2">
+              <ToggleButton Classes="seg" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" ToolTip.Tip="Dark">
+                <ctrl:AppIcon Kind="Moon" Width="13" Height="13" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+              </ToggleButton>
+              <ToggleButton Classes="seg" IsChecked="{Binding IsLightTheme, Mode=TwoWay}" ToolTip.Tip="Light">
+                <ctrl:AppIcon Kind="Sun" Width="14" Height="14" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+              </ToggleButton>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="seggroup">
+            <StackPanel Orientation="Horizontal" Spacing="2">
+              <ToggleButton Classes="seg" Content="DE" IsChecked="{Binding IsGerman, Mode=TwoWay}" ToolTip.Tip="Deutsch" />
+              <ToggleButton Classes="seg" Content="EN" IsChecked="{Binding IsEnglish, Mode=TwoWay}" ToolTip.Tip="English" />
+            </StackPanel>
+          </Border>
+
+          <Border Classes="seggroup">
+            <StackPanel Orientation="Horizontal" Spacing="2">
+              <ToggleButton Classes="seg" Content="{Binding ViewFlatText}" IsChecked="{Binding IsFlatView, Mode=TwoWay}" />
+              <ToggleButton Classes="seg" Content="{Binding ViewTreeText}" IsChecked="{Binding IsTreeView, Mode=TwoWay}" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- === Kennzahlen === -->
+    <Grid Grid.Row="2" Margin="16,10,16,0" ColumnDefinitions="*,*,*,*">
+      <Border Grid.Column="0" Background="{DynamicResource AppSurfaceBrush}" Padding="18,14" BorderBrush="{DynamicResource AppStrokeSoftBrush}" BorderThickness="0,0,1,0">
+        <StackPanel Spacing="3">
+          <TextBlock Text="{Binding KpiFoundFoldersText}" Classes="kpi-label" />
+          <TextBlock Text="{Binding FoundCountText}" Classes="kpi-value" />
+          <TextBlock Text="{Binding BinObjSplitText}" Classes="kpi-sub" />
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Column="1" Background="{DynamicResource AppSurfaceBrush}" Padding="18,14" BorderBrush="{DynamicResource AppStrokeSoftBrush}" BorderThickness="0,0,1,0">
+        <StackPanel Spacing="3">
+          <TextBlock Text="{Binding KpiCandidatesText}" Classes="kpi-label" />
+          <TextBlock Text="{Binding CandidatesTotalText}" Classes="kpi-value" Foreground="{DynamicResource AppAccentBrush}" />
+          <TextBlock Text="{Binding CandidatesBytesText}" Classes="kpi-sub" />
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Column="2" Background="{DynamicResource AppSurfaceBrush}" Padding="18,14" BorderBrush="{DynamicResource AppStrokeSoftBrush}" BorderThickness="0,0,1,0">
+        <StackPanel Spacing="3">
+          <TextBlock Text="{Binding KpiRootTotalText}" Classes="kpi-label" />
+          <TextBlock Text="{Binding RootTotalText}" Classes="kpi-value" />
+          <TextBlock Text="{Binding KpiRootTotalSubText}" Classes="kpi-sub" />
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Column="3" Background="{DynamicResource AppSurfaceBrush}" Padding="18,14">
+        <StackPanel Spacing="3">
+          <TextBlock Text="{Binding KpiSavingsText}" Classes="kpi-label" />
+          <TextBlock Text="{Binding SavingsRatioText}" Classes="kpi-value" Foreground="{DynamicResource AppSuccessBrush}" />
+          <TextBlock Text="{Binding KpiSavingsSubText}" Classes="kpi-sub" />
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <!-- === Inhalt === -->
+    <Grid Grid.Row="3" Margin="16,10,16,0" ColumnDefinitions="*,400">
+
+      <!-- Ergebnisse -->
+      <Grid Grid.Column="0" RowDefinitions="Auto,*" Margin="0,0,16,0">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto,Auto" Margin="0,2,0,10" ColumnSpacing="10">
+          <TextBlock Grid.Column="0" Text="{Binding ResultsText}" Classes="section" VerticalAlignment="Center" />
+          <CheckBox Grid.Column="1" IsChecked="{Binding IsAllSelected}" VerticalAlignment="Center"
+                    ToolTip.Tip="{Binding SelectAllText}" />
+          <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Border Classes="input field" Height="28" Padding="8,0">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <ctrl:AppIcon Kind="Search" Width="12" Height="12" VerticalAlignment="Center"
+                              Stroke="{DynamicResource AppTextMutedBrush}" />
+                <TextBox Text="{Binding FilterText, Mode=TwoWay}" PlaceholderText="{Binding FilterPlaceholderText}"
+                         FontSize="12" Width="180" VerticalAlignment="Center"
+                         GotFocus="OnFieldGotFocus" LostFocus="OnFieldLostFocus" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+          <Button Grid.Column="3" Classes="sort" Command="{Binding SortCommand}" CommandParameter="size"
+                  Content="{Binding SortSizeText}" VerticalAlignment="Center" />
+          <Button Grid.Column="4" Classes="sort" Command="{Binding SortCommand}" CommandParameter="path"
+                  Content="{Binding SortPathText}" VerticalAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="1" RowDefinitions="Auto,*">
+          <!-- Spaltenüberschriften (nur in der Listenansicht sinnvoll) -->
+          <Border Grid.Row="0" Background="{DynamicResource AppPanelBrush}" BorderBrush="{DynamicResource AppStrokeSoftBrush}" BorderThickness="0,0,0,1" Padding="18,8"
+                  IsVisible="{Binding IsFlatView}">
+            <Grid ColumnDefinitions="34,56,*,110,104">
+              <TextBlock Grid.Column="0" Text=" " Classes="th" />
+              <TextBlock Grid.Column="1" Text="{Binding ColumnTypeText}" Classes="th" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="2" Text="{Binding ColumnPathText}" Classes="th" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="3" Text="{Binding ColumnShareText}" Classes="th" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="4" Text="{Binding ColumnSizeText}" Classes="th" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            </Grid>
+          </Border>
+
+          <!-- Flache Liste -->
+          <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                        IsVisible="{Binding IsFlatView}">
+            <ItemsControl ItemsSource="{Binding VisibleResults}" Classes="rowlist">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:ArtifactFolder">
+                  <Border Classes="row" BorderBrush="{DynamicResource AppStrokeSoftBrush}" BorderThickness="0,0,0,1" Padding="18,8">
+                    <Grid ColumnDefinitions="34,56,*,110,104">
+                      <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalAlignment="Center" />
+                      <Border Grid.Column="1" Classes="tag" HorizontalAlignment="Left" Classes.obj="{Binding IsObjCategory}">
+                        <TextBlock Text="{Binding Category}" Classes="tag" />
+                      </Border>
+                      <ctrl:PathText Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                     Directory="{Binding DirectoryPath}"
+                                     Leaf="{Binding LeafName}"
+                                     DirectoryBrush="{DynamicResource AppTextDimBrush}"
+                                     LeafBrush="{DynamicResource AppTextBrush}"
+                                     ToolTip.Tip="{Binding RelativePath}" />
+                      <ProgressBar Grid.Column="3" Classes="share" Value="{Binding Share}" Maximum="1"
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,12,0"
+                                   MinWidth="0" />
+                      <TextBlock Grid.Column="4" Text="{Binding SizeInBytes, Converter={x:Static vm:ByteSizeToStringConverter.Instance}}"
+                                 HorizontalAlignment="Right" VerticalAlignment="Center"
+                                 Foreground="{DynamicResource AppTextBrush}" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </ScrollViewer>
+
+          <!-- Baumansicht -->
+          <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                        IsVisible="{Binding IsTreeView}">
+            <TreeView ItemsSource="{Binding TreeRoots}" Background="Transparent">
+              <TreeView.Styles>
+                <Style Selector="TreeViewItem" x:DataType="models:FolderTreeNode">
+                  <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                  <Setter Property="Background" Value="Transparent" />
+                  <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+                  <Setter Property="FontSize" Value="12.5" />
+                  <Setter Property="Padding" Value="0" />
+                  <Setter Property="Margin" Value="0" />
+                </Style>
+              </TreeView.Styles>
+              <TreeView.ItemTemplate>
+                <TreeDataTemplate x:DataType="models:FolderTreeNode" ItemsSource="{Binding Children}">
+                  <Grid ColumnDefinitions="*,Auto" MinHeight="26">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                      <TextBlock Text="{Binding Name}" FontSize="12.5" VerticalAlignment="Center"
+                                 Foreground="{DynamicResource AppTextBrush}" />
+                      <Border Classes="chip" Padding="6,1" IsVisible="{Binding IsCandidate}">
+                        <TextBlock Text="bin/obj" FontSize="10" FontWeight="Bold"
+                                   Foreground="{DynamicResource AppTextMutedBrush}" />
+                      </Border>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="12"
+                               Text="{Binding SizeInBytes, Converter={x:Static vm:ByteSizeToStringConverter.Instance}}"
+                               Foreground="{DynamicResource AppTextDimBrush}" />
+                  </Grid>
+                </TreeDataTemplate>
+              </TreeView.ItemTemplate>
+            </TreeView>
+          </ScrollViewer>
+        </Grid>
+      </Grid>
+
+      <!-- Diagrammpanel -->
+      <Border Grid.Column="1" Classes="panel" Padding="18">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Spacing="0">
+
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+              <ctrl:AppIcon Grid.Column="0" Kind="BarChart" Width="15" Height="15" VerticalAlignment="Center"
+                            Stroke="{DynamicResource AppTextDimBrush}" />
+              <TextBlock Grid.Column="1" Text="{Binding SavingsTitleText}" Classes="section" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="2" Text="{Binding SavingsHintText}" Classes="muted" FontSize="11"
+                         VerticalAlignment="Center" />
+            </Grid>
+
+            <Border Classes="card" Margin="0,13,0,0" Padding="16">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="18">
+                <Grid Grid.Column="0" Width="132" Height="132">
+                  <ctrl:DonutChart Segments="{Binding Segments}" Thickness="17" GapDegrees="2"
+                                   BinBrush="{DynamicResource AppAccentBrush}"
+                                   ObjBrush="{DynamicResource AppSecondBrush}"
+                                   RemainingBrush="{DynamicResource ChartRemainingBrush}"
+                                   FallbackBrush="{DynamicResource ChartRemainingBrush}" />
+                  <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" IsHitTestVisible="False">
+                    <TextBlock Text="{Binding ChartCenterValueText}" FontSize="19" FontWeight="SemiBold"
+                               HorizontalAlignment="Center" Foreground="{DynamicResource AppTextBrush}" />
+                    <TextBlock Text="{Binding ChartCenterSubText}" FontSize="10.5" Classes="muted"
+                               HorizontalAlignment="Center" />
+                  </StackPanel>
+                </Grid>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="9">
+                  <ItemsControl ItemsSource="{Binding Segments}">
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate x:DataType="models:ChartSegment">
+                        <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="8">
+                          <Border Grid.Column="0" Width="9" Height="9" CornerRadius="3" Classes="swatch"
+                                  Classes.bin="{Binding IsBin}" Classes.obj="{Binding IsObj}" />
+                          <TextBlock Grid.Column="1" Text="{Binding Label}" FontSize="12.5"
+                                     Foreground="{DynamicResource AppTextDimBrush}" VerticalAlignment="Center" />
+                          <TextBlock Grid.Column="2" Text="{Binding Value, Converter={x:Static vm:ByteSizeToStringConverter.Instance}}"
+                                     FontSize="12.5" FontWeight="SemiBold" HorizontalAlignment="Right"
+                                     Foreground="{DynamicResource AppTextBrush}" />
+                          <TextBlock Grid.Column="3" FontSize="11" Classes="muted" MinWidth="46"
+                                     HorizontalAlignment="Right" VerticalAlignment="Center"
+                                     Text="{Binding Share, Converter={x:Static vm:PercentOfTotalConverter.Instance}}" />
+                        </Grid>
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </Grid>
+            </Border>
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="0,22,0,0">
+              <ctrl:AppIcon Grid.Column="0" Kind="BarChart" Width="15" Height="15" VerticalAlignment="Center"
+                            Stroke="{DynamicResource AppTextDimBrush}" />
+              <TextBlock Grid.Column="1" Text="{Binding TopFoldersText}" Classes="section" VerticalAlignment="Center" />
+            </Grid>
+
+            <ctrl:BarChart Items="{Binding TopFolders}" Margin="0,12,0,0"
+                           LabelBrush="{DynamicResource ChartLabelBrush}"
+                           ValueBrush="{DynamicResource ChartTextBrush}"
+                           TrackBrush="{DynamicResource ChartTrackBrush}"
+                           BinBrush="{DynamicResource AppAccentBrush}"
+                           ObjBrush="{DynamicResource AppSecondBrush}"
+                           FallbackBrush="{DynamicResource AppAccentBrush}" />
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="0,22,0,0">
+              <ctrl:AppIcon Grid.Column="0" Kind="Layers" Width="15" Height="15" VerticalAlignment="Center"
+                            Stroke="{DynamicResource AppTextDimBrush}" />
+              <TextBlock Grid.Column="1" Text="{Binding ByProjectText}" Classes="section" VerticalAlignment="Center" />
+            </Grid>
+
+            <ItemsControl ItemsSource="{Binding ProjectBreakdown}" Margin="0,12,0,0">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:ProjectBreakdownItem">
+                  <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,9">
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="12.5"
+                               Foreground="{DynamicResource AppTextDimBrush}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding Value, Converter={x:Static vm:ByteSizeToStringConverter.Instance}}"
+                               FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource AppTextBrush}" />
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+
+    <!-- === Fußleiste === -->
+    <Border Grid.Row="4" Margin="0,10,0,0" Padding="16,10" Background="{DynamicResource AppPanelBrush}"
+            BorderBrush="{DynamicResource AppStrokeBrush}" BorderThickness="0,1,0,0">
+      <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" ColumnSpacing="12">
+        <Ellipse Grid.Column="0" Width="7" Height="7" Classes="status" Classes.busy="{Binding IsBusy}" VerticalAlignment="Center" />
+
+        <TextBlock Grid.Column="1" Text="{Binding StatusText}" FontSize="12.5" Classes="dim"
+                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+
+        <TextBlock Grid.Column="2" Text="{Binding BuildInfoText}" FontSize="11" Classes="muted"
+                   VerticalAlignment="Center" Margin="0,0,18,0" ToolTip.Tip="{Binding BuildInfoDetails}" />
+
+        <CheckBox Grid.Column="3" IsChecked="{Binding DryRun}" Content="{Binding DryRunText}"
+                  VerticalAlignment="Center" FontSize="12.5" Foreground="{DynamicResource AppTextDimBrush}" />
+
+        <Button Grid.Column="4" Command="{Binding DeleteSelectedCommand}">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <ctrl:AppIcon Kind="Trash" />
+            <TextBlock Text="{Binding DeleteSelectionText}" />
+          </StackPanel>
+        </Button>
+
+        <Button Grid.Column="5" Classes="danger" Command="{Binding DeleteAllCommand}">
+          <StackPanel Orientation="Horizontal" Spacing="7">
+            <ctrl:AppIcon Kind="Trash" />
+            <TextBlock Text="{Binding DeleteAllText}" />
+          </StackPanel>
+        </Button>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

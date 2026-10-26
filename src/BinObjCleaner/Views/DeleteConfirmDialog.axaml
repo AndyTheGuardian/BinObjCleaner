@@ -1,0 +1,119 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BinObjCleaner.Views"
+        xmlns:models="using:BinObjCleaner.Models"
+        xmlns:ctrl="using:BinObjCleaner.Controls"
+        x:Class="BinObjCleaner.Views.DeleteConfirmDialog"
+        x:DataType="vm:DeleteConfirmDialogViewModel"
+        Title="{Binding TitleText}"
+        Width="540" SizeToContent="Height"
+        CanResize="False"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppSurfaceBrush}"
+        FontSize="13">
+
+  <Window.Styles>
+    <Style Selector="Button">
+      <Setter Property="Height" Value="34" />
+      <Setter Property="Padding" Value="14,0" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Background" Value="{DynamicResource AppPanelAltBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource AppStrokeBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+    </Style>
+
+    <Style Selector="Button:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppHoverBrush}" />
+    </Style>
+
+    <Style Selector="Button.danger">
+      <Setter Property="Background" Value="{DynamicResource AppDangerBrush}" />
+      <Setter Property="Foreground" Value="#FFFFFF" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="Button.danger:pointerover">
+      <Setter Property="Background" Value="{DynamicResource AppDangerHoverBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.muted">
+      <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.dim">
+      <Setter Property="Foreground" Value="{DynamicResource AppTextDimBrush}" />
+    </Style>
+  </Window.Styles>
+
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="22,20,22,18">
+
+    <!-- Kopf -->
+    <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+      <Border Grid.Column="0" Width="40" Height="40" CornerRadius="10"
+              Background="{DynamicResource AppDangerSoftBrush}">
+        <ctrl:AppIcon Kind="Warning" Width="22" Height="22"
+                      Stroke="{DynamicResource AppDangerBrush}" />
+      </Border>
+
+      <StackPanel Grid.Column="1" Spacing="6">
+        <TextBlock Text="{Binding TitleText}" FontSize="16" FontWeight="SemiBold"
+                   Foreground="{DynamicResource AppTextBrush}" TextWrapping="Wrap" />
+        <TextBlock Text="{Binding MessageText}" FontSize="13" Classes="dim"
+                   Foreground="{DynamicResource AppTextDimBrush}" TextWrapping="Wrap" LineHeight="19" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Kennzahlen -->
+    <Border Grid.Row="1" Margin="0,16,0,0" CornerRadius="10" Padding="14,12"
+            Background="{DynamicResource AppPanelBrush}" BorderBrush="{DynamicResource AppStrokeBrush}" BorderThickness="1">
+      <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+        <TextBlock Grid.Column="0" Text="{Binding TotalText}" FontSize="21" FontWeight="SemiBold"
+                   VerticalAlignment="Center" Foreground="{DynamicResource AppAccentBrush}" />
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="3">
+          <TextBlock Text="{Binding SummaryText}" FontSize="12" Classes="dim"
+                     Foreground="{DynamicResource AppTextDimBrush}" />
+          <TextBlock Text="{Binding ShareOfRootText}" FontSize="12" Classes="muted"
+                     Foreground="{DynamicResource AppTextMutedBrush}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Pfadliste -->
+    <Border Grid.Row="2" Margin="0,12,0,0" CornerRadius="10" Padding="12,9"
+            Background="{DynamicResource AppPanelBrush}" BorderBrush="{DynamicResource AppStrokeBrush}" BorderThickness="1">
+      <ScrollViewer MaxHeight="104" VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding Folders}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="models:ArtifactFolder">
+              <TextBlock Text="{Binding RelativePath}" FontFamily="Cascadia Mono,Consolas"
+                         FontSize="11.5" Foreground="{DynamicResource AppTextDimBrush}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Border>
+
+    <!-- Papierkorb -->
+    <StackPanel Grid.Row="3" Margin="0,14,0,0" Spacing="6">
+      <CheckBox IsChecked="{Binding UseRecycleBin}" IsEnabled="{Binding RecycleBinAvailable}"
+                Content="{Binding RecycleBinText}" FontSize="13"
+                Foreground="{DynamicResource AppTextBrush}" />
+      <TextBlock Text="{Binding RecycleBinHintText}" FontSize="11.5" Classes="muted"
+                 Foreground="{DynamicResource AppTextMutedBrush}" TextWrapping="Wrap" />
+    </StackPanel>
+
+    <!-- Aktionen -->
+    <Grid Grid.Row="4" ColumnDefinitions="*,Auto,Auto" Margin="0,18,0,0" ColumnSpacing="10">
+      <Button Grid.Column="1" Content="{Binding CancelText}" Click="OnCancelClick" />
+      <Button Grid.Column="2" Classes="danger" Click="OnConfirmClick">
+        <StackPanel Orientation="Horizontal" Spacing="7">
+          <ctrl:AppIcon Kind="Trash" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+          <TextBlock Text="{Binding ConfirmText}" />
+        </StackPanel>
+      </Button>
+    </Grid>
+  </Grid>
+</Window>

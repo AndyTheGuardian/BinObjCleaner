@@ -1,0 +1,82 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="BinObjCleaner.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+
+        <!-- ======================= Dark ======================= -->
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="AppSurfaceBrush" Color="#171A21" />
+          <SolidColorBrush x:Key="AppPanelBrush" Color="#1C2029" />
+          <SolidColorBrush x:Key="AppPanelAltBrush" Color="#222733" />
+          <SolidColorBrush x:Key="AppStrokeBrush" Color="#2E3543" />
+          <SolidColorBrush x:Key="AppStrokeSoftBrush" Color="#262C38" />
+          <SolidColorBrush x:Key="AppTextBrush" Color="#E7EBF3" />
+          <SolidColorBrush x:Key="AppTextDimBrush" Color="#A2ABBD" />
+          <SolidColorBrush x:Key="AppTextMutedBrush" Color="#7C869A" />
+          <SolidColorBrush x:Key="AppHoverBrush" Color="#2B3240" />
+          <SolidColorBrush x:Key="AppSwitchOffBrush" Color="#3C4454" />
+          <SolidColorBrush x:Key="AppAccentBrush" Color="#5B8CFF" />
+          <SolidColorBrush x:Key="AppAccentHoverBrush" Color="#7BA1FF" />
+          <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#335B8CFF" />
+          <SolidColorBrush x:Key="AppDangerBrush" Color="#FF5F57" />
+          <SolidColorBrush x:Key="AppDangerHoverBrush" Color="#FF7A73" />
+          <SolidColorBrush x:Key="AppDangerSoftBrush" Color="#33FF5F57" />
+          <SolidColorBrush x:Key="AppSuccessBrush" Color="#3DDC97" />
+          <SolidColorBrush x:Key="AppWarningBrush" Color="#FFB648" />
+
+          <!-- Zweite Kategorie (obj) - der einzige weitere Farbton neben dem Akzent -->
+          <SolidColorBrush x:Key="AppSecondBrush" Color="#B06BFF" />
+          <SolidColorBrush x:Key="AppSecondSoftBrush" Color="#33B06BFF" />
+
+          <!-- Diagramm-Hilfsfarben -->
+          <SolidColorBrush x:Key="ChartRemainingBrush" Color="#333C4D" />
+          <SolidColorBrush x:Key="ChartTrackBrush" Color="#333C4D" />
+          <SolidColorBrush x:Key="ChartLabelBrush" Color="#A2ABBD" />
+          <SolidColorBrush x:Key="ChartTextBrush" Color="#E7EBF3" />
+        </ResourceDictionary>
+
+        <!-- ======================= Light ======================= -->
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="AppSurfaceBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="AppPanelBrush" Color="#F5F7FB" />
+          <SolidColorBrush x:Key="AppPanelAltBrush" Color="#FFFFFF" />
+          <SolidColorBrush x:Key="AppStrokeBrush" Color="#DAE1EC" />
+          <SolidColorBrush x:Key="AppStrokeSoftBrush" Color="#E9EDF4" />
+          <SolidColorBrush x:Key="AppTextBrush" Color="#141D2B" />
+          <SolidColorBrush x:Key="AppTextDimBrush" Color="#4F5E75" />
+          <SolidColorBrush x:Key="AppTextMutedBrush" Color="#8492A6" />
+          <SolidColorBrush x:Key="AppHoverBrush" Color="#EEF2F9" />
+          <SolidColorBrush x:Key="AppSwitchOffBrush" Color="#C7D1E2" />
+          <SolidColorBrush x:Key="AppAccentBrush" Color="#2F6BFF" />
+          <SolidColorBrush x:Key="AppAccentHoverBrush" Color="#4B80FF" />
+          <SolidColorBrush x:Key="AppAccentSoftBrush" Color="#332F6BFF" />
+          <SolidColorBrush x:Key="AppDangerBrush" Color="#E0453C" />
+          <SolidColorBrush x:Key="AppDangerHoverBrush" Color="#EC5C54" />
+          <SolidColorBrush x:Key="AppDangerSoftBrush" Color="#33E0453C" />
+          <SolidColorBrush x:Key="AppSuccessBrush" Color="#0F9E70" />
+          <SolidColorBrush x:Key="AppWarningBrush" Color="#C9761F" />
+
+          <!-- Zweite Kategorie (obj) - der einzige weitere Farbton neben dem Akzent -->
+          <SolidColorBrush x:Key="AppSecondBrush" Color="#8B47E0" />
+          <SolidColorBrush x:Key="AppSecondSoftBrush" Color="#268B47E0" />
+
+          <!-- Diagramm-Hilfsfarben -->
+          <SolidColorBrush x:Key="ChartRemainingBrush" Color="#DFE6F4" />
+          <SolidColorBrush x:Key="ChartTrackBrush" Color="#DFE6F4" />
+          <SolidColorBrush x:Key="ChartLabelBrush" Color="#4F5E75" />
+          <SolidColorBrush x:Key="ChartTextBrush" Color="#141D2B" />
+        </ResourceDictionary>
+
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>
